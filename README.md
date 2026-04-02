@@ -1,4 +1,4 @@
-# Midterm Project Report — Heart Disease Prediction
+# Heart Disease Prediction
 Generative AI provided limited assistance in line with the course policy on usage of AI.
 
 ### Introduction 
