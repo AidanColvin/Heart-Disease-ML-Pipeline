@@ -1,5 +1,94 @@
+# Heart Disease Prediction · Supervised ML Pipeline
+ 
+[![Language: Python](https://img.shields.io/badge/language-python-blue.svg)](#)
+[![ML: scikit-learn](https://img.shields.io/badge/ML-scikit--learn-orange.svg)](#)
+[![Data: Synthetic Clinical](https://img.shields.io/badge/data-synthetic_clinical-red.svg)](#)
+[![Models: GB · RF · LR](https://img.shields.io/badge/models-gradient_boosting_%7C_random_forest_%7C_logistic_regression-purple.svg)](#)
+[![AUC: 0.9540](https://img.shields.io/badge/AUC-0.9540-brightgreen.svg)](#)
+[![Privacy: Synthetic Data](https://img.shields.io/badge/privacy-synthetic_data-success.svg)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+ 
+Estimates the probability of heart disease from 13 clinical features. Trains and compares three supervised models. Uses synthetic patient data to preserve privacy while enabling model development.
+ 
+---
+ 
+## The Problem
+ 
+Heart disease is one of the leading causes of death worldwide. Catching it early matters. Clinicians cannot always identify high-risk patients from routine data alone. This project builds a model to estimate heart disease risk and help prioritize who needs intervention most.
+ 
+---
+ 
+## What the Model Does
+ 
+Three supervised models are trained and compared on the same dataset.
+ 
+| Model | Approach |
+|-------|----------|
+| Gradient Boosting | Fits each tree to residual errors of the current ensemble |
+| Random Forest | Builds many decorrelated trees via bootstrap sampling |
+| Logistic Regression | Interpretable baseline with Ridge regularization and splines |
+ 
+Gradient Boosting was selected as the final model. It achieved the highest AUC and sensitivity.
+ 
+---
+ 
+## Key Findings
+ 
+- All three models achieved AUC above 0.95 on held-out data
+- Gradient Boosting reached 86.6% sensitivity at the default threshold
+- Thallium Stress Test and Chest Pain Type were the strongest predictors
+- Blood Pressure had near-zero correlation with the outcome and was dropped by LassoCV
+- All models reached identical specificity (90.4%), showing differences arise in how each handles hard positive cases
+---
+ 
+## Pipeline
+ 
+```
+630,000 synthetic clinical observations (13 features)
+        |
+Z-score standardization (fit on train only) > LassoCV feature selection
+        |
+Drops Blood Pressure (|r| = 0.005, shrunk to zero)
+        |
+Gradient Boosting   > AUC 0.9540, Sensitivity 86.6%
+Random Forest       > AUC 0.9528, Sensitivity 86.3%
+Logistic Regression > AUC 0.9507, Sensitivity 85.7%
+        |
+5-fold stratified cross-validation scored by AUC
+```
+ 
+---
+ 
+## Results
+ 
+| Model | CV AUC | Sensitivity | Specificity |
+|-------|--------|-------------|-------------|
+| Gradient Boosting | **0.9540** | **86.6%** | 90.4% |
+| Random Forest | 0.9528 | 86.3% | 90.4% |
+| Logistic Regression | 0.9507 | 85.7% | 90.4% |
+ 
+---
+ 
+## Stack
+ 
+`Python 3.11` `scikit-learn 1.4.0` `pandas` `numpy` `scipy` `matplotlib` `LassoCV` `GridSearchCV`
+ 
+---
+ 
+## Repo Structure
+ 
+```
+src/                model pipeline and preprocessing
+data/visualizations figures and plots
+report.pdf          full write-up with all results
+README.md
+```
+ 
+---
+ 
+# Full Report
+
 # Heart Disease Prediction
-Generative AI provided limited assistance in line with the course policy on usage of AI.
 
 ### Introduction 
 
